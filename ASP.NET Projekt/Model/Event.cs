@@ -15,7 +15,7 @@ namespace ASP.NET_Projekt.Model
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
 
-        public List<User> Organizer { get; set; }
+        public User Organizer { get; set; }
         public List<User> Attendees { get; set; }
     }
 }
