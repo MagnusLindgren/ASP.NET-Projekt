@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ASP.NET_Projekt</title>
+    <title>@ViewData["Title"] - Event Organizer</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,18 +11,21 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ASP.NET_Projekt</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Event Organizer</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse justify-content-start">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        <li class="nav-item mx-1">
+                            <a class="btn btn-outline-primary" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <li class="nav-item mx-1">
+                            <a class="btn btn-outline-dark" asp-area="" asp-page="/Privacy">Upcoming Events</a> <!--Todo ändra routing -->
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="btn btn-outline-dark" asp-area="" asp-page="/Privacy">My Events</a> <!--Todo ändra routing -->
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -37,8 +40,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - ASP.NET_Projekt - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        <div class="container text-center">
+            &copy; 2021 - Samuel Brinkebäck & Magnus Lindgren - <a href="https://github.com/MagnusLindgren/ASP.NET-Projekt">Source Code</a>
         </div>
     </footer>
 
