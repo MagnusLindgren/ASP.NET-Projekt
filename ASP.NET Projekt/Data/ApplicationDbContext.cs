@@ -29,7 +29,7 @@ namespace ASP.NET_Projekt.Data
                 Email = "test@test.com",
                 FirstName = "Test",
                 LastName = "User",
-                PhoneNumber = "070 666 40 45"
+                PhoneNumber = "070 666 40 45"                
             };
 
             Event[] events = new Event[]
@@ -43,8 +43,10 @@ namespace ASP.NET_Projekt.Data
                     Address="515 S Cascade Ave Colorado Springs, CO 80903",
                     Date=DateTime.Now.AddDays(34),
                     SpotsAvailable=234,
+                    Organizer=user
                 }
             };
+            await userManager.CreateAsync(user, "Losenord123!");
 
             await AddRangeAsync(events);
             await SaveChangesAsync();
