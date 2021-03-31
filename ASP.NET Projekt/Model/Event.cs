@@ -16,9 +16,9 @@ namespace ASP.NET_Projekt.Model
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
 
-        [InverseProperty("UserName")]
+        [InverseProperty("HostedEvents")]
         public User Organizer { get; set; }
-        [InverseProperty("UserName")]
+        [InverseProperty("JoinedEvents")]
         public List<User> Attendees { get; set; }
     }
 }
