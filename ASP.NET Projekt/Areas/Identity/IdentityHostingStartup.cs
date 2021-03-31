@@ -15,12 +15,7 @@ namespace ASP.NET_Projekt.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<ASPNET_ProjektContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("ASPNET_ProjektContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ASPNET_ProjektContext>();
             });
         }
     }
