@@ -40,7 +40,29 @@ namespace ASP.NET_Projekt.Data
                     Description="is a Belgian electronic dance music festival held in Belgium. Tomorrowland was first held in 2005." +
                     " It now stretches over two weekends and usually sells out in minutes.",
                     Place="Belgium",
-                    Address="515 S Cascade Ave Colorado Springs, CO 80903",
+                    Address="De Schorre, 2850 Boom",
+                    Date=DateTime.Now.AddDays(34),
+                    SpotsAvailable=234,
+                    Organizer=user
+                },
+                new Event()
+                {
+                    Title="Ultra Music Festival",
+                    Description="is an annual outdoor electronic music festival that takes place during March in Miami, United States. " +
+                    "The festival was founded in 1999 by Russell Faibisch and Alex Omes and is named after the 1997 Depeche Mode album, Ultra.",
+                    Place="Miami",
+                    Address="395 E Flagler St, Miami, FL 33132",
+                    Date=DateTime.Now.AddDays(34),
+                    SpotsAvailable=234,
+                    Organizer=user
+                },
+                new Event()
+                {
+                    Title="Defqon.1 Festival",
+                    Description="is an annual music festival held in the Netherlands. It was founded in 2003 by festival organizer Q-dance. " +
+                    "The festival plays mostly hardstyle and related genres such as hardcore techno, hard house and hard trance.",
+                    Place="Netherlands",
+                    Address="Spijkweg 30, 8256 RJ Biddinghuizen",
                     Date=DateTime.Now.AddDays(34),
                     SpotsAvailable=234,
                     Organizer=user
