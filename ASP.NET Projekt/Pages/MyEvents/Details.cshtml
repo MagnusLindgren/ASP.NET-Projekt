@@ -1,9 +1,8 @@
 ﻿@page
-@model ASP.NET_Projekt.Pages.Events.DetailsModel
+@model ASP.NET_Projekt.Pages.MyEvents.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
@@ -49,9 +48,6 @@
             @Html.DisplayFor(model => model.Event.SpotsAvailable)
         </dd>
     </dl>
-    <form method="post">
-        <button type="submit">Join this event</button>
-    </form>
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.Id">Edit</a> |

@@ -8,17 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
 
-namespace ASP.NET_Projekt.Pages.Events
+namespace ASP.NET_Projekt.Pages.MyEvents
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ASP.NET_Projekt.Data.ApplicationDbContext _context;
 
-        public DetailsModel(ASP.NET_Projekt.Data.ApplicationDbContext context)
+        public DeleteModel(ASP.NET_Projekt.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
         public Event Event { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -28,7 +29,7 @@ namespace ASP.NET_Projekt.Pages.Events
                 return NotFound();
             }
 
-            Event = await _context.Events.Include(o => o.Organizer).FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {
@@ -36,6 +37,7 @@ namespace ASP.NET_Projekt.Pages.Events
             }
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
@@ -43,19 +45,15 @@ namespace ASP.NET_Projekt.Pages.Events
                 return NotFound();
             }
 
-            Event = await _context.Events.Include(u => u.Attendees).FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FindAsync(id);
 
-            if (Event == null)
+            if (Event != null)
             {
-                return NotFound();
+                _context.Events.Remove(Event);
+                await _context.SaveChangesAsync();
             }
 
-            var attendee = await _context.Users.FirstOrDefaultAsync();
-
-            Event.Attendees.Add(attendee);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Details", new { id = id });
+            return RedirectToPage("./Index");
         }
     }
 }

@@ -24,6 +24,7 @@ namespace ASP.NET_Projekt
                 var context = services.GetRequiredService<Data.ApplicationDbContext>();
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 await context.ResetAndSeedAsync(userManager);
+                
             }
             host.Run();
         }

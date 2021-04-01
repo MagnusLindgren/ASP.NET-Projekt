@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
 
-namespace ASP.NET_Projekt.Pages.Events
+namespace ASP.NET_Projekt.Pages.MyEvents
 {
     public class DetailsModel : PageModel
     {
@@ -28,34 +28,13 @@ namespace ASP.NET_Projekt.Pages.Events
                 return NotFound();
             }
 
-            Event = await _context.Events.Include(o => o.Organizer).FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {
                 return NotFound();
             }
             return Page();
-        }
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Event = await _context.Events.Include(u => u.Attendees).FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Event == null)
-            {
-                return NotFound();
-            }
-
-            var attendee = await _context.Users.FirstOrDefaultAsync();
-
-            Event.Attendees.Add(attendee);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Details", new { id = id });
         }
     }
 }
