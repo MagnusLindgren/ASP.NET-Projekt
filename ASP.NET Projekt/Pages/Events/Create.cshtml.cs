@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASP.NET_Projekt.Pages.Events
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ASP.NET_Projekt.Data.ApplicationDbContext _context;

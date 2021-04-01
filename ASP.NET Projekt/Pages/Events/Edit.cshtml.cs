@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASP.NET_Projekt.Pages.Events
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ASP.NET_Projekt.Data.ApplicationDbContext _context;
