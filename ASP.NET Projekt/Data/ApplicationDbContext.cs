@@ -31,6 +31,7 @@ namespace ASP.NET_Projekt.Data
                 LastName = "User",
                 PhoneNumber = "070 666 40 45"                
             };
+            await userManager.CreateAsync(user, "Losenord123!");
 
             Event[] events = new Event[]
             {
@@ -68,7 +69,7 @@ namespace ASP.NET_Projekt.Data
                     Organizer=user
                 }
             };
-            await userManager.CreateAsync(user, "Losenord123!");
+            
 
             await AddRangeAsync(events);
             await SaveChangesAsync();

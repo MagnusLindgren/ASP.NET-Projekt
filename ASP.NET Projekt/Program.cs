@@ -23,8 +23,18 @@ namespace ASP.NET_Projekt
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<Data.ApplicationDbContext>();
                 var userManager = services.GetRequiredService<UserManager<User>>();
-                await context.ResetAndSeedAsync(userManager);
-                
+                try 
+                {
+                    if (await context.Database.EnsureCreatedAsync()) 
+                    {
+                        await context.ResetAndSeedAsync(userManager);  
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Ett fel inträffade vid skapandet av databasen.");
+                }
             }
             host.Run();
         }
