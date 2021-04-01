@@ -25,7 +25,10 @@ namespace ASP.NET_Projekt
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 try 
                 {
-                    await context.ResetAndSeedAsync(userManager); 
+                    if (await context.Database.EnsureCreatedAsync()) 
+                    {
+                        await context.ResetAndSeedAsync(userManager);  
+                    }
                 }
                 catch (Exception ex)
                 {
