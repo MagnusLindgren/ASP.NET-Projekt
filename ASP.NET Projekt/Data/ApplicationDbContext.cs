@@ -26,6 +26,9 @@ namespace ASP.NET_Projekt.Data
             var role = new IdentityRole("Administrator");
             await roleManager.CreateAsync(role);
 
+            var organizerRole = new IdentityRole("Organizer");
+            await roleManager.CreateAsync(organizerRole);
+
             // Admin
             User admin = new User()
             {
@@ -38,6 +41,18 @@ namespace ASP.NET_Projekt.Data
             };
             await userManager.CreateAsync(admin, "Admin123!");
             await userManager.AddToRoleAsync(admin, role.Name);
+
+            User organizer = new User()
+            {
+                UserName = "Organizer",
+                Email = "organizer@organizer.com",
+                EmailConfirmed = true,
+                FirstName = "Org",
+                LastName = "Anizer",
+                PhoneNumber = "072 888 64 71"
+            };
+            await userManager.CreateAsync(organizer, "Org123!");
+            await userManager.AddToRoleAsync(organizer, organizerRole.Name);
 
             // Vanlig User
             User user = new User()
