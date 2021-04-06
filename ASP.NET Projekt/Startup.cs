@@ -33,12 +33,10 @@ namespace ASP.NET_Projekt
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true) 
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+               
 
             services.AddRazorPages();
         }

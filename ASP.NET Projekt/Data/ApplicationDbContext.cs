@@ -27,7 +27,7 @@ namespace ASP.NET_Projekt.Data
             await roleManager.CreateAsync(role);
 
             // Admin
-            var admin = new User()
+            User admin = new User()
             {
                 UserName = "Admin",
                 Email = "admin2admin.com",
