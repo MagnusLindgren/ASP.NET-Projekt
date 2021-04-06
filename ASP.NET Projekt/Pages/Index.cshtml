@@ -1,18 +1,30 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.AspNetCore.Identity
+@using Model
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1>Welcome @User.Identity.Name </h1>
+        <p>Use the the buttons up in the menu to navigate</p>
+    }
+    else
+    { 
     <h1 class="display-4">Welcome</h1>
     <p>This is a site wher you can sign up for events.</p>
     <div class=" container-fluid">
         <div class=" row">
             <div class="flex-grow-1 align-self-center">
-                <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                    <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
             </div>
         </div>
     </div>
+    }
 </div>
