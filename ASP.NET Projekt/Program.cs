@@ -23,11 +23,12 @@ namespace ASP.NET_Projekt
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<Data.ApplicationDbContext>();
                 var userManager = services.GetRequiredService<UserManager<User>>();
+                var roleManager = services.GetRequiredService<AspNetRoleManager<IdentityRole>>();
                 try 
                 {
                     if (await context.Database.EnsureCreatedAsync()) 
                     {
-                        await context.ResetAndSeedAsync(userManager);  
+                        await context.ResetAndSeedAsync(userManager, roleManager);  
                     }
                 }
                 catch (Exception ex)
