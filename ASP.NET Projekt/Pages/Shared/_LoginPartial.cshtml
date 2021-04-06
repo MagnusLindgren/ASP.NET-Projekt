@@ -3,36 +3,37 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        @if (User.IsInRole("Administrator"))
-        {
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome Administrator @User.Identity.Name!</a>
-        }
-        else if (User.IsInRole("Organizer"))
-        {
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome Organizer @User.Identity.Name!</a>
+<ul class="navbar-nav flex-grow-1">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item mx-1">
+            @if (User.IsInRole("Administrator"))
+            {
+                <a class="btn btn-danger" asp-page="/Admin/ManageUsers">Manage users</a>
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome Administrator @User.Identity.Name!</a>
+                }
+                else if (User.IsInRole("Organizer"))
+                {
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Welcome Organizer @User.Identity.Name!</a>
+                }
+                else
+                {
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+                }
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </li>
         }
         else
         {
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+            <li class="nav-item mx-1">
+                <a class="btn btn-outline-danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item mx-1">
+                <a class="btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
         }
-    </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
-            <button  type="submit" class="btn btn-danger">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item mx-1">
-        <a class="btn btn-outline-danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item mx-1">
-        <a class="btn btn-outline-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+        </ul>
