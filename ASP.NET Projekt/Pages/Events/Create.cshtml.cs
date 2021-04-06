@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ASP.NET_Projekt.Pages.Events
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Organizer")]
     public class CreateModel : PageModel
     {
         private readonly ASP.NET_Projekt.Data.ApplicationDbContext _context;

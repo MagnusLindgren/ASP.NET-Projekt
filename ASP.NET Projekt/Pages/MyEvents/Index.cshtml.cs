@@ -19,11 +19,12 @@ namespace ASP.NET_Projekt.Pages.MyEvents
             _context = context;
         }
 
-        public IList<Event> Event { get;set; }
+        public IList<Event> Events { get;set; }
 
         public async Task OnGetAsync()
         {
-            Event = await _context.Events.ToListAsync();
+            var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
+            Events = attendee.JoinedEvents;
         }
     }
 }

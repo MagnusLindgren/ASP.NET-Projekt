@@ -59,6 +59,7 @@ namespace ASP.NET_Projekt.Data
             {
                 UserName = "testuser",
                 Email = "test@test.com",
+                EmailConfirmed = true,
                 FirstName = "Test",
                 LastName = "User",
                 PhoneNumber = "070 666 40 45"                
