@@ -33,7 +33,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <input type="checkbox" class="custom-checkbox" />
+                <form method="post">
+                    <input type="checkbox" class="custom-checkbox" value="@item.Id" onclick="this.form.submit()"/>
+                </form>
             </td>
             <td>
                 <a type="button" class="btn btn-outline-info" asp-page="./UserDetails" asp-route-id="@item.Id">Details</a>
