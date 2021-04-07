@@ -23,8 +23,17 @@ namespace ASP.NET_Projekt.Pages.MyEvents
 
         public async Task OnGetAsync()
         {
-            var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
-            Events = attendee.JoinedEvents;
+            if (User.IsInRole("Organizer"))
+            {
+                var organizer = await _context.Users.Include(a => a.HostedEvents).FirstOrDefaultAsync();
+                Events = organizer.HostedEvents;
+            }
+            else
+            {
+                var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
+                Events = attendee.JoinedEvents;
+            }
+
         }
     }
 }

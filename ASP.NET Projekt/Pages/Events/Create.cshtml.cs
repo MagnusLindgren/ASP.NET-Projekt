@@ -8,17 +8,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP.NET_Projekt.Pages.Events
 {
     [Authorize(Roles = "Admin, Organizer")]
     public class CreateModel : PageModel
     {
-        private readonly ASP.NET_Projekt.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public CreateModel(ASP.NET_Projekt.Data.ApplicationDbContext context)
+
+        public CreateModel(ASP.NET_Projekt.Data.ApplicationDbContext context,
+            UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -37,7 +43,19 @@ namespace ASP.NET_Projekt.Pages.Events
                 return Page();
             }
 
-            _context.Events.Add(Event);
+            //Event = await _context.Events.Include(u => u.Organizer).FirstOrDefaultAsync(m => m.Id == id);
+            //var organizer = await _context.Users.FirstOrDefaultAsync();
+
+            Event.Organizer = await _context.Users.FindAsync(_userManager.GetUserId(User));
+
+            //Console.WriteLine(Event.Organizer);
+
+            //Event.Organizer.HostedEvents.Add(Event);
+
+            //await _context.Events.Organi
+            //Event.Organizer.HostedEvents.Add(Event);
+            await _context.Events.AddAsync(Event);
+            
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
