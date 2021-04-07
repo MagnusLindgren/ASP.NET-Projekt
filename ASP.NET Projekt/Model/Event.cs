@@ -14,6 +14,7 @@ namespace ASP.NET_Projekt.Model
         public string Description { get; set; }
         public string Place { get; set; }
         public string Address { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
