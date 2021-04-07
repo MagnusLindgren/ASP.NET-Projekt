@@ -24,6 +24,7 @@ namespace ASP.NET_Projekt.Pages.Admin
 
         [BindProperty]
         public User User { get; set; }
+        public IList<Event> UserEvents { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string? id)
         {
@@ -33,6 +34,9 @@ namespace ASP.NET_Projekt.Pages.Admin
             }
 
             User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+
+            var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
+            UserEvents = attendee.JoinedEvents;
 
             if (User == null)
             {
