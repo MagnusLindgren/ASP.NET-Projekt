@@ -60,12 +60,6 @@ namespace ASP.NET_Projekt.Pages.Admin
                 return Page();
             }
 
-            if (BanUser ?? false)
-            {
-                User.LockoutEnd = DateTime.Now.AddDays(9999);
-                User.LockoutEnabled = true;
-            }
-
             _context.Attach(User).State = EntityState.Modified;
 
             try
@@ -82,6 +76,12 @@ namespace ASP.NET_Projekt.Pages.Admin
                 {
                     throw;
                 }
+            }
+            
+            if (BanUser ?? false)
+            {
+                User.LockoutEnd = DateTime.Now.AddDays(9999);
+                User.LockoutEnabled = true;
             }
 
             return RedirectToPage("./Index");
