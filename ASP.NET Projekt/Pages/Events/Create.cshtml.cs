@@ -46,13 +46,13 @@ namespace ASP.NET_Projekt.Pages.Events
             //Event = await _context.Events.Include(u => u.Organizer).FirstOrDefaultAsync(m => m.Id == id);
             //var organizer = await _context.Users.FirstOrDefaultAsync();
 
-            Event.Organizer = await _context.Users.FindAsync(_userManager.GetUserId(User));
-
+            //Event.Organizer = await _context.Users.FindAsync(_userManager.GetUserId(User));
+            var user = await _userManager.GetUserAsync(this.User);
+            Event.Organizer = user;
             //Console.WriteLine(Event.Organizer);
 
             //Event.Organizer.HostedEvents.Add(Event);
 
-            //await _context.Events.Organi
             //Event.Organizer.HostedEvents.Add(Event);
             await _context.Events.AddAsync(Event);
             
