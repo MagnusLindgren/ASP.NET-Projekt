@@ -36,9 +36,22 @@ namespace ASP.NET_Projekt
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true) 
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-               
 
-            services.AddRazorPages();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole",
+                    policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequireOrganizerRole",
+                    policy => policy.RequireRole("Organizer"));
+                options.AddPolicy("RequireAttendeeRole",
+                    policy => policy.RequireRole("Attendee"));
+
+            });
+
+            services.AddRazorPages(o =>
+            {
+                o.Conventions.AuthorizeFolder("/OrganizerEvents", "RequireOrganizerRole");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
