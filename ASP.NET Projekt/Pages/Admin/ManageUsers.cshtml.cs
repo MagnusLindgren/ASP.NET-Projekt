@@ -30,7 +30,39 @@ namespace ASP.NET_Projekt.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Users = await _context.Users.ToListAsync();
+            Users = await _context.Users.ToListAsync();            
+        }
+
+        public async Task<IActionResult> OnPostAsync(string? id)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+
+            var organizerRole = "Organizer";
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (await _userManager.IsInRoleAsync(user, organizerRole))
+            {
+                await _userManager.RemoveFromRoleAsync(user, organizerRole);
+            }
+            else
+            {
+                await _userManager.AddToRoleAsync(user, organizerRole);
+            }
+
+            return RedirectToPage();
+        }
+
+        public async Task<bool> IsOrganizer(string id)
+        {
+            IdentityRole role = await _context.Roles
+                .Where(r => r.Name == "Organizer")
+                .FirstOrDefaultAsync();
+
+            return await _context.UserRoles
+                .AnyAsync(u => u.UserId == id && u.RoleId == role.Id);    
         }
     }
 }

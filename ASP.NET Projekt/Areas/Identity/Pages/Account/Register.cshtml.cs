@@ -89,6 +89,7 @@ namespace ASP.NET_Projekt.Areas.Identity.Pages.Account
             {
                 var user = new User { UserName = Input.UserName, FirstName = Input.FirstName, LastName = Input.LastName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, "Attendee"); // Tilldela nya användare Attendee roll
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

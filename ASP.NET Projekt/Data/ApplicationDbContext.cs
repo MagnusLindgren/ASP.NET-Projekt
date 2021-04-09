@@ -23,11 +23,12 @@ namespace ASP.NET_Projekt.Data
             await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
 
-            var role = new IdentityRole("Administrator");
-            await roleManager.CreateAsync(role);
+            // Skapar roller
+            await roleManager.CreateAsync(new IdentityRole("Administrator"));
+            await roleManager.CreateAsync(new IdentityRole("Organizer"));
+            await roleManager.CreateAsync(new IdentityRole("Attendee"));
 
-            var organizerRole = new IdentityRole("Organizer");
-            await roleManager.CreateAsync(organizerRole);
+            await Roles.ToListAsync();
 
             // Admin
             User admin = new User()
@@ -40,7 +41,7 @@ namespace ASP.NET_Projekt.Data
                 PhoneNumber = "072 222 23 34"
             };
             await userManager.CreateAsync(admin, "Admin123!");
-            await userManager.AddToRoleAsync(admin, role.Name);
+            await userManager.AddToRoleAsync(admin, "Administrator");
 
             User organizer = new User()
             {
@@ -52,7 +53,7 @@ namespace ASP.NET_Projekt.Data
                 PhoneNumber = "072 888 64 71"
             };
             await userManager.CreateAsync(organizer, "Org123!");
-            await userManager.AddToRoleAsync(organizer, organizerRole.Name);
+            await userManager.AddToRoleAsync(organizer, "Organizer");
 
             // Vanlig User
             User user = new User()
@@ -65,6 +66,7 @@ namespace ASP.NET_Projekt.Data
                 PhoneNumber = "070 666 40 45"                
             };
             await userManager.CreateAsync(user, "Losenord123!");
+            await userManager.AddToRoleAsync(user, "Attendee");
 
             Event[] events = new Event[]
             {

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP.NET_Projekt.Pages.Admin
 {
@@ -16,15 +17,18 @@ namespace ASP.NET_Projekt.Pages.Admin
     public class UserDetailsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UserDetailsModel(ApplicationDbContext context)
+        public UserDetailsModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;           
         }
 
         [BindProperty]
         public User User { get; set; }
         public IList<Event> UserEvents { get; set; }
+        public IList<string> Roles { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string? id)
         {
@@ -34,6 +38,8 @@ namespace ASP.NET_Projekt.Pages.Admin
             }
 
             User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+
+            Roles = await _userManager.GetRolesAsync(User);
 
             var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
             UserEvents = attendee.JoinedEvents;
@@ -54,12 +60,6 @@ namespace ASP.NET_Projekt.Pages.Admin
                 return Page();
             }
 
-            if (BanUser ?? false)
-            {
-                User.LockoutEnd = DateTime.Now.AddDays(9999);
-                User.LockoutEnabled = true;
-            }
-
             _context.Attach(User).State = EntityState.Modified;
 
             try
@@ -76,6 +76,12 @@ namespace ASP.NET_Projekt.Pages.Admin
                 {
                     throw;
                 }
+            }
+            
+            if (BanUser ?? false)
+            {
+                User.LockoutEnd = DateTime.Now.AddDays(9999);
+                User.LockoutEnabled = true;
             }
 
             return RedirectToPage("./Index");

@@ -8,13 +8,18 @@
 
 <h1>UserDetails</h1>
 
-<h4>Event</h4>
 <hr />
-<div class="row">
+<div class="container">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="User.Id" />
+            <h3>@Model.User.UserName</h3>
+            @foreach (var item in Model.Roles)
+            {
+                <h4>@Html.DisplayFor(modelItem => item)</h4>
+            }
+            
             <div class="form-group">
                 <label asp-for="User.UserName" class="control-label"></label>
                 <input asp-for="User.UserName" class="form-control" />
@@ -40,6 +45,7 @@
                 <input asp-for="User.PhoneNumber" class="form-control" />
                 <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="User.JoinedEvents" class="control-label"></label>
                 @foreach (var item in Model.UserEvents)
@@ -53,14 +59,14 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Ban!" class="btn btn-danger" asp-route-BanUser="true"/>
+                <input type="submit" value="Ban!" class="btn btn-danger" asp-route-BanUser="true" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./ManageUsers">Back to List</a>
 </div>
 
 @section Scripts {
