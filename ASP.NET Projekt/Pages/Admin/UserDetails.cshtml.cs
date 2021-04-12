@@ -54,7 +54,7 @@ namespace ASP.NET_Projekt.Pages.Admin
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(string id, bool? BanUser)
         {
             if (!ModelState.IsValid)
             {
@@ -68,6 +68,12 @@ namespace ASP.NET_Projekt.Pages.Admin
             newUserDetails.LastName = User.LastName;
             newUserDetails.Email = User.Email;
             newUserDetails.PhoneNumber = User.PhoneNumber;
+
+            if (BanUser ?? false)
+            {
+                newUserDetails.LockoutEnd = DateTime.Now.AddDays(9999);
+                newUserDetails.LockoutEnabled = true;
+            }
 
             try
             {
@@ -84,12 +90,8 @@ namespace ASP.NET_Projekt.Pages.Admin
                     throw;
                 }
             }
-            /*
-            if (BanUser ?? false)
-            {
-                User.LockoutEnd = DateTime.Now.AddDays(9999);
-                User.LockoutEnabled = true;
-            }*/
+           
+           
 
             return RedirectToPage("./UserDetails", new { id = id });
         }
