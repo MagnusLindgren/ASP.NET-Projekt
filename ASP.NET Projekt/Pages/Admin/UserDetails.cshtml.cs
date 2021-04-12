@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ASP.NET_Projekt.Pages.Admin
 {
-    [Authorize(Roles = "Administrator")]
     public class UserDetailsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -71,8 +70,15 @@ namespace ASP.NET_Projekt.Pages.Admin
 
             if (BanUser ?? false)
             {
+                if (newUserDetails.LockoutEnd != null)
+                {
+                    newUserDetails.LockoutEnd = null;
+                }
+                else
+                { 
                 newUserDetails.LockoutEnd = DateTime.Now.AddDays(9999);
                 newUserDetails.LockoutEnabled = true;
+                }
             }
 
             try
