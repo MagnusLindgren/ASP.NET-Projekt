@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Model
+@inject SignInManager<User> SignInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,29 +14,33 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-            @if (User.IsInRole("Administrator")) { @("style=background-color:lightgrey!important;")}
-            else if (User.IsInRole("Organizer")) { @("style=background-color:lightgreen!important;;")}>
-                <div class="container-fluid d-sm-inline-flex">
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">Event Organizer</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse justify-content-start">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item mx-1">
-                                <a class="btn btn-outline-primary" asp-area="" asp-page="/Index">Home</a>
-                            </li>
-                            <li class="nav-item mx-1">
-                                <a class="btn btn-outline-dark" asp-area="" asp-page="/Events/Index">Upcoming Events</a>
-                            </li>
+             @if (User.IsInRole("Administrator")) { @("style=background-color:lightgrey!important;")  } 
+             else if (User.IsInRole("Organizer")) { @("style=background-color:lightgreen!important;;") }
+             else if (User.IsInRole("Attendee")) { @("style=background-color:lightblue!important;;") }>
+            <div class="container-fluid d-sm-inline-flex">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Event Organizer</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-start">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item mx-1">
+                            <a class="btn btn-outline-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <a class="btn btn-outline-dark" asp-area="" asp-page="/Events/Index">Upcoming Events</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
                             <li class="nav-item mx-1">
                                 <a class="btn btn-outline-dark" asp-area="" asp-page="/MyEvents/Index">My Events</a>
                             </li>
-                        </ul>
-                        <partial name="_LoginPartial" />
-                    </div>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
                 </div>
+            </div>
         </nav>
     </header>
     <div class="container">
@@ -46,7 +53,7 @@
         <div class="container text-center">
             &copy; 2021 - Samuel Brinkebäck & Magnus Lindgren - <a href="https://github.com/MagnusLindgren/ASP.NET-Projekt">Source Code</a>
             <a type="button" class="btn btn-danger btn-sm text-light" asp-route-resetDb="true">Reset Db</a>
-        </div>       
+        </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
