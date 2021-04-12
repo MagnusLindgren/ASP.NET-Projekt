@@ -40,7 +40,7 @@ namespace ASP.NET_Projekt
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole",
-                    policy => policy.RequireRole("Adminstrator"));
+                    policy => policy.RequireRole("Administrator"));
                 options.AddPolicy("RequireOrganizerRole",
                     policy => policy.RequireRole("Organizer"));
                 options.AddPolicy("RequireAttendeeRole",
@@ -54,7 +54,6 @@ namespace ASP.NET_Projekt
                 o.Conventions.AllowAnonymousToPage("/Events/Index");
                 o.Conventions.AuthorizeFolder("/");
                 o.Conventions.AuthorizeFolder("/OrganizerEvents", "RequireOrganizerRole");
-                o.Conventions.AuthorizeFolder("/OrganizerEvents", "RequireAdminRole");
                 o.Conventions.AuthorizeFolder("/Admin", "RequireAdminRole");
                 });
         }
