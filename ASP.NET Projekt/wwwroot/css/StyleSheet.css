@@ -1,0 +1,26 @@
+﻿body {
+    background-color: azure;
+}
+
+#showcase {
+    background-image: url(../img/concert-crowd.jpg);
+    background-position: bottom;
+    background-size: cover;
+    min-height: 300px;
+    margin-bottom: 30px;
+    text-align: center;
+    background-attachment: fixed;
+}
+
+    #showcase h1 {
+        color: #fff;
+        font-size: 50px;
+        text-shadow: 2px 2px black;
+        line-height: 1.6em;
+        padding-top: 30px;
+    }
+
+    #showcase p {
+        color: #fff;
+        text-shadow: 2px 2px black;
+    }
