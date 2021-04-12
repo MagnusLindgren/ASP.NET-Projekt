@@ -53,7 +53,7 @@ namespace ASP.NET_Projekt.Pages.Events
             }
 
             var attendee = await _context.Users.FirstOrDefaultAsync();
-
+            Event.SpotsAvailable--;
             Event.Attendees.Add(attendee);
             await _context.SaveChangesAsync();
 
