@@ -40,7 +40,7 @@ namespace ASP.NET_Projekt
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole",
-                    policy => policy.RequireRole("Admin"));
+                    policy => policy.RequireRole("Adminstrator"));
                 options.AddPolicy("RequireOrganizerRole",
                     policy => policy.RequireRole("Organizer"));
                 options.AddPolicy("RequireAttendeeRole",
