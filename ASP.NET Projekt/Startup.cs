@@ -40,7 +40,7 @@ namespace ASP.NET_Projekt
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole",
-                    policy => policy.RequireRole("Admin"));
+                    policy => policy.RequireRole("Administrator"));
                 options.AddPolicy("RequireOrganizerRole",
                     policy => policy.RequireRole("Organizer"));
                 options.AddPolicy("RequireAttendeeRole",
@@ -50,8 +50,12 @@ namespace ASP.NET_Projekt
 
             services.AddRazorPages(o =>
             {
+                o.Conventions.AllowAnonymousToPage("/Index");
+                o.Conventions.AllowAnonymousToPage("/Events/Index");
+                o.Conventions.AuthorizeFolder("/");
                 o.Conventions.AuthorizeFolder("/OrganizerEvents", "RequireOrganizerRole");
-            });
+                o.Conventions.AuthorizeFolder("/Admin", "RequireAdminRole");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

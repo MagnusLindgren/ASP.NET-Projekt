@@ -10,15 +10,15 @@ using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ASP.NET_Projekt.Pages.Admin
 {
-    [Authorize(Roles = "Administrator")]
     public class UserDetailsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
-
+       
         public UserDetailsModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
@@ -53,14 +53,33 @@ namespace ASP.NET_Projekt.Pages.Admin
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string id, bool? BanUser)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(User).State = EntityState.Modified;
+            var newUserDetails = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+
+            newUserDetails.UserName = User.UserName;
+            newUserDetails.FirstName = User.FirstName;
+            newUserDetails.LastName = User.LastName;
+            newUserDetails.Email = User.Email;
+            newUserDetails.PhoneNumber = User.PhoneNumber;
+
+            if (BanUser ?? false)
+            {
+                if (newUserDetails.LockoutEnd != null)
+                {
+                    newUserDetails.LockoutEnd = null;
+                }
+                else
+                { 
+                newUserDetails.LockoutEnd = DateTime.Now.AddDays(9999);
+                newUserDetails.LockoutEnabled = true;
+                }
+            }
 
             try
             {
@@ -77,14 +96,10 @@ namespace ASP.NET_Projekt.Pages.Admin
                     throw;
                 }
             }
-            /*
-            if (BanUser ?? false)
-            {
-                User.LockoutEnd = DateTime.Now.AddDays(9999);
-                User.LockoutEnabled = true;
-            }*/
+           
+           
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./UserDetails", new { id = id });
         }
 
         private bool UserExists(string id)

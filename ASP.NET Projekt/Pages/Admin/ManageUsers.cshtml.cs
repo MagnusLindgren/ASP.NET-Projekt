@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ASP.NET_Projekt.Pages.Admin
 {
-    [Authorize(Roles = "Administrator")]
     public class ManageUsersModel : PageModel
     {
         private readonly ApplicationDbContext _context;
