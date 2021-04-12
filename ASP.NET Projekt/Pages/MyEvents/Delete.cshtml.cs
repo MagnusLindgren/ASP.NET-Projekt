@@ -61,6 +61,7 @@ namespace ASP.NET_Projekt.Pages.MyEvents
                 .FirstOrDefaultAsync();
 
             getUserJoinedEvents.JoinedEvents.Remove(Event);
+            Event.SpotsAvailable++;
 
             if (Event != null)
             {
