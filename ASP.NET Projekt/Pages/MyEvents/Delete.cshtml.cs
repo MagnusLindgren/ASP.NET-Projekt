@@ -7,15 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ASP.NET_Projekt.Data;
 using ASP.NET_Projekt.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP.NET_Projekt.Pages.MyEvents
 {
     public class DeleteModel : PageModel
     {
-        private readonly ASP.NET_Projekt.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public DeleteModel(ASP.NET_Projekt.Data.ApplicationDbContext context)
+        public DeleteModel(ASP.NET_Projekt.Data.ApplicationDbContext context,
+                       UserManager<User> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -45,11 +49,22 @@ namespace ASP.NET_Projekt.Pages.MyEvents
                 return NotFound();
             }
 
-            Event = await _context.Events.FindAsync(id);
+            var userId = _userManager.GetUserId(User);
+
+            var getUserJoinedEvents = await _context.Users
+                .Where(u => u.Id == userId)
+                .Include(j => j.JoinedEvents)
+                .FirstOrDefaultAsync();
+
+            Event = await _context.Events
+                .Where(e => e.Id == id)
+                .FirstOrDefaultAsync();
+
+            getUserJoinedEvents.JoinedEvents.Remove(Event);
 
             if (Event != null)
             {
-                _context.Events.Remove(Event);
+                
                 await _context.SaveChangesAsync();
             }
 
