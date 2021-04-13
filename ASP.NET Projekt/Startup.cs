@@ -42,7 +42,7 @@ namespace ASP.NET_Projekt
                 options.AddPolicy("RequireAdminRole",
                     policy => policy.RequireRole("Administrator"));
                 options.AddPolicy("RequireOrganizerRole",
-                    policy => policy.RequireRole("Organizer"));
+                    policy => policy.RequireRole("Organizer", "Administrator"));
                 options.AddPolicy("RequireAttendeeRole",
                     policy => policy.RequireRole("Attendee"));
 
