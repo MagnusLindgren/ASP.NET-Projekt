@@ -2,6 +2,13 @@
     background-color: azure;
 }
 
+.alert {
+    position: fixed;
+    z-index: 1;
+    right: 30px;
+    top: 60px;
+}
+
 #showcase {
     background-image: url(../img/concert-crowd.jpg);
     background-position: bottom;
