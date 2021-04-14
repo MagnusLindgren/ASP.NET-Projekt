@@ -2,11 +2,9 @@
 @model ASP.NET_Projekt.Pages.Events.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Upcoming Events";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-<h1>Events</h1>
 
 <div class="accordion" id="accordionExample">
     @foreach (var item in Model.Event)
