@@ -45,16 +45,16 @@
     @if (!Model.AttendeeIsAttending)
      {
         <form method="post">
-            <button type="submit">Join this event</button>
+            <button class="btn btn-primary" type="submit">Join this event</button>
         </form>
      }
      else
      {
         <p>You have joined this event!</p>
+        <a class="btn btn-primary" asp-page="/MyEvents/Index">Go to my events</a>
      }
 
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Event.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

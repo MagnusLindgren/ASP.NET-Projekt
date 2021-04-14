@@ -39,18 +39,14 @@ namespace ASP.NET_Projekt.Pages.Events
 
             Event = await _context.Events.Include(o => o.Organizer).FirstOrDefaultAsync(m => m.Id == id);
 
-/*            var userId = _userManager.GetUserId(User);
-*/
-            //var getUsersJoinedEvents = await _context.Events.Include(a => a.Attendees).FirstOrDefaultAsync(m => m.Id == id);
-/*            var getUserJoinedEvents = await _context.Users
-                .Where(u => u.Id == userId)
-                .Include(j => j.JoinedEvents)
-                .FirstOrDefaultAsync();*/
+            var attendee = await _context.Users.FirstOrDefaultAsync();
 
-/*            if (!getUserJoinedEvents.JoinedEvents.Contains(userId))
+            var getUserJoinedEvents = await _context.Events.Include(a => a.Attendees).FirstOrDefaultAsync(m => m.Id == id);
+
+            if (getUserJoinedEvents.Attendees.Contains(attendee))
             {
                 AttendeeIsAttending = true;
-            }*/
+            }
 
             if (Event == null)
             {
