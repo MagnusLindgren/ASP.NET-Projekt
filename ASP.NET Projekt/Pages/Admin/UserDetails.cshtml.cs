@@ -11,6 +11,8 @@ using ASP.NET_Projekt.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Html;
+using System.Text.Encodings.Web;
 
 namespace ASP.NET_Projekt.Pages.Admin
 {
@@ -18,7 +20,7 @@ namespace ASP.NET_Projekt.Pages.Admin
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
-       
+
         public UserDetailsModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
@@ -29,26 +31,31 @@ namespace ASP.NET_Projekt.Pages.Admin
         public User User { get; set; }
         public IList<Event> UserEvents { get; set; }
         public IList<string> Roles { get; set; }
+        public bool DetailsChanged { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task OnGetAsync(string id, bool? detailsChanged)
         {
             if (id == null)
             {
-                return NotFound();
+                NotFound();
             }
 
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            DetailsChanged = detailsChanged ?? false;
+
+            User = await _context.Users
+                .Include(a => a.JoinedEvents)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             Roles = await _userManager.GetRolesAsync(User);
 
-            var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
-            UserEvents = attendee.JoinedEvents;
+            //var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
+            UserEvents = User.JoinedEvents;
 
             if (User == null)
             {
-                return NotFound();
+                NotFound();
             }
-            return Page();
+            //return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -96,10 +103,9 @@ namespace ASP.NET_Projekt.Pages.Admin
                     throw;
                 }
             }
-           
-           
 
-            return RedirectToPage("./UserDetails", new { id = id });
+            //return Page();
+            return RedirectToPage("./UserDetails", new { DetailsChanged = true,  id = id });
         }
 
         private bool UserExists(string id)

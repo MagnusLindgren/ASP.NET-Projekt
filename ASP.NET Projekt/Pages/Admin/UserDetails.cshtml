@@ -22,7 +22,7 @@
             {
                 <h3 class="text-danger">Banned</h3>
             }
-            @if (Request.Method == "POST")
+            @if (Model.DetailsChanged)
             {
                 <div class="d-flex justify-content-center">
                     <h2>Details updated</h2>
@@ -65,21 +65,24 @@
             </div>
             <div class="row">
                 <div class="form-group mx-1">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <form method="post">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </form>
                 </div>
-                <div class="form-group mx-1">
-                    @{string banValue; }
-                    @if (@Model.User.LockoutEnd != null)
-                    {
-                        banValue = "Unban";
-                    }
-                    else
-                    {
-                        banValue = "Ban!";
-                    }
-                    <input type="submit" value="@banValue" class="btn btn-danger" asp-route-id="@Model.User.Id" asp-route-BanUser="true" />
-                </div>
-            </div>
+        
+        <div class="form-group mx-1">
+            @{string banValue; }
+            @if (@Model.User.LockoutEnd != null)
+            {
+                banValue = "Unban";
+            }
+            else
+            {
+                banValue = "Ban!";
+            }
+            <input type="submit" value="@banValue" class="btn btn-danger" asp-route-id="@Model.User.Id" asp-route-BanUser="true" />
+        </div>
+    </div>
         </form>
     </div>
 </div>
