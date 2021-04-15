@@ -39,7 +39,10 @@ namespace ASP.NET_Projekt.Pages.Events
 
             Event = await _context.Events.Include(o => o.Organizer).FirstOrDefaultAsync(m => m.Id == id);
 
-            var attendee = await _context.Users.FirstOrDefaultAsync();
+            var userId = _userManager.GetUserId(User);
+            var attendee = await _context.Users
+                .Where(a => a.Id == userId)
+                .FirstOrDefaultAsync();
 
             var getUserJoinedEvents = await _context.Events.Include(a => a.Attendees).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -68,7 +71,10 @@ namespace ASP.NET_Projekt.Pages.Events
                 return NotFound();
             }
 
-            var attendee = await _context.Users.FirstOrDefaultAsync();
+            var userId = _userManager.GetUserId(User);
+            var attendee = await _context.Users
+                .Where(a => a.Id == userId)
+                .FirstOrDefaultAsync();
 
             if (!Event.Attendees.Contains(attendee))
             {

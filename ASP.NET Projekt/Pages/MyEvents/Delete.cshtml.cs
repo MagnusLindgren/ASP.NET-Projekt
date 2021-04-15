@@ -33,7 +33,9 @@ namespace ASP.NET_Projekt.Pages.MyEvents
                 return NotFound();
             }
 
-            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events
+                .OrderBy(e => e.Date)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {

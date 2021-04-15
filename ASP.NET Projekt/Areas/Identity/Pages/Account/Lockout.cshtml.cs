@@ -23,6 +23,11 @@ namespace ASP.NET_Projekt.Areas.Identity.Pages.Account
         public User ThisUser { get; set; }
         public async Task OnGetAsync(string id)
         {
+            if (id == null)
+            {
+                NotFound();
+            }
+
             ThisUser = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);            
         }
     }
