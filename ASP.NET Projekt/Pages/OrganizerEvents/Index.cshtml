@@ -4,6 +4,11 @@
 @{
     ViewData["Title"] = "Organized Events";
 }
+@if (Model.Event == null || Model.Event.Count == 0)
+{
+    <p>You havn't created any events yet</p>
+    <p>You can <a class="btn btn-outline-dark" asp-area="" asp-page="/Events/Index">Create an Event</a></p>
+}
 
 <div class="accordion" id="accordionExample">
     @foreach (var item in Model.Event)

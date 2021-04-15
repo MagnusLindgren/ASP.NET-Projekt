@@ -79,7 +79,7 @@ namespace ASP.NET_Projekt.Data
                     Address="De Schorre, 2850 Boom",
                     Date=DateTime.Now.AddDays(34),
                     SpotsAvailable=234,
-                    Organizer=user
+                    Organizer=organizer
                 },
                 new Event()
                 {
@@ -90,7 +90,7 @@ namespace ASP.NET_Projekt.Data
                     Address="395 E Flagler St, Miami, FL 33132",
                     Date=DateTime.Now.AddDays(34),
                     SpotsAvailable=234,
-                    Organizer=user
+                    Organizer=organizer
                 },
                 new Event()
                 {
@@ -101,7 +101,7 @@ namespace ASP.NET_Projekt.Data
                     Address="Spijkweg 30, 8256 RJ Biddinghuizen",
                     Date=DateTime.Now.AddDays(34),
                     SpotsAvailable=234,
-                    Organizer=user
+                    Organizer=organizer
                 }
             };
             
