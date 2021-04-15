@@ -6,14 +6,14 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>@Model.User.UserName</h1>
+<h1>@Model.ThisUser.UserName</h1>
 
 <hr />
 <div class="container">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="User.Id" />
+            <input type="hidden" asp-for="ThisUser.Id" />
             @foreach (var item in Model.Roles)
             {
                 <h4>@Html.DisplayFor(modelItem => item)</h4>
@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label asp-for="ThisUser.Email" class="control-label"></label>
                 <input asp-for="ThisUser.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
+                <span asp-validation-for="ThisUser.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ThisUser.PhoneNumber" class="control-label"></label>
