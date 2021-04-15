@@ -53,7 +53,7 @@ namespace ASP.NET_Projekt.Pages.OrganizerEvents
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
