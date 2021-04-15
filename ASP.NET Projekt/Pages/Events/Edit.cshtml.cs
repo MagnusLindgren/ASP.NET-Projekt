@@ -68,7 +68,7 @@ namespace ASP.NET_Projekt.Pages.Events
                 }
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
 
         private bool EventExists(int id)
