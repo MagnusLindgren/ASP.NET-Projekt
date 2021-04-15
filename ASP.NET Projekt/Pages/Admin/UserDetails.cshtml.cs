@@ -11,6 +11,8 @@ using ASP.NET_Projekt.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Html;
+using System.Text.Encodings.Web;
 
 namespace ASP.NET_Projekt.Pages.Admin
 {
@@ -18,7 +20,7 @@ namespace ASP.NET_Projekt.Pages.Admin
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
-       
+
         public UserDetailsModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
@@ -29,26 +31,32 @@ namespace ASP.NET_Projekt.Pages.Admin
         public User User { get; set; }
         public IList<Event> UserEvents { get; set; }
         public IList<string> Roles { get; set; }
+        public bool DetailsChanged { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task OnGetAsync(string id, bool? detailsChanged)
         {
             if (id == null)
             {
-                return NotFound();
+                NotFound();
             }
 
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            DetailsChanged = detailsChanged ?? false;
 
+            // Hämta User
+            User = await _context.Users
+                .Include(a => a.JoinedEvents)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            // Hämta roll(er)
             Roles = await _userManager.GetRolesAsync(User);
 
-            var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
-            UserEvents = attendee.JoinedEvents;
+            // Hämta Events som User är registrerad till
+            UserEvents = User.JoinedEvents;
 
             if (User == null)
             {
-                return NotFound();
+                NotFound();
             }
-            return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -60,20 +68,25 @@ namespace ASP.NET_Projekt.Pages.Admin
                 return Page();
             }
 
+            // Hämta data för att skriva över
             var newUserDetails = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
 
+            // Skriv över gammal data med ny data
             newUserDetails.UserName = User.UserName;
             newUserDetails.FirstName = User.FirstName;
             newUserDetails.LastName = User.LastName;
             newUserDetails.Email = User.Email;
             newUserDetails.PhoneNumber = User.PhoneNumber;
 
+            // Kolla om parametern ger ett BanUser = true eller false
             if (BanUser ?? false)
             {
+                // Om Usern är utelåst så nollställs LockoutEnd
                 if (newUserDetails.LockoutEnd != null)
                 {
                     newUserDetails.LockoutEnd = null;
                 }
+                // Om Usern inte har något värde i LockoutEnd så läggs värde till
                 else
                 { 
                 newUserDetails.LockoutEnd = DateTime.Now.AddDays(9999);
@@ -81,6 +94,7 @@ namespace ASP.NET_Projekt.Pages.Admin
                 }
             }
 
+            // Försök att spara
             try
             {
                 await _context.SaveChangesAsync();
@@ -96,10 +110,10 @@ namespace ASP.NET_Projekt.Pages.Admin
                     throw;
                 }
             }
-           
-           
 
-            return RedirectToPage("./UserDetails", new { id = id });
+            // Använder RedirectToPage för att få till rätt resultat.
+            // Skicka med bool när Save eller Ban  trycks för att få en alert samt id på User
+            return RedirectToPage("./UserDetails", new { DetailsChanged = true,  id = id });
         }
 
         private bool UserExists(string id)

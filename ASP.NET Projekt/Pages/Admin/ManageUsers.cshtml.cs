@@ -15,13 +15,11 @@ namespace ASP.NET_Projekt.Pages.Admin
     public class ManageUsersModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
 
-        public ManageUsersModel(ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public ManageUsersModel(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
-            _roleManager = roleManager;
             _userManager = userManager;
         }
 
@@ -32,7 +30,7 @@ namespace ASP.NET_Projekt.Pages.Admin
             Users = await _context.Users.ToListAsync();            
         }
 
-        public async Task<IActionResult> OnPostAsync(string? id)
+        public async Task<IActionResult> OnPostAsync(string id)
         {
             if (id == null)
             {
