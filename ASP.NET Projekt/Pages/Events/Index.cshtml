@@ -38,12 +38,17 @@
                         <p>@Html.DisplayFor(modelItem => item.SpotsAvailable)</p>
                     </div>
 
-                    <div>
-                        <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Join</a>
-                        <!-- Ska visas beroende på vilken roll man har
-                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                        -->
+                    <div class="row d-flex justify-content-between">
+                        <div class="">
+                            <a class="btn btn-primary" asp-page="./Details" asp-route-id="@item.Id">Join</a>
+                        </div>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <div class="float-right">
+                                <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
