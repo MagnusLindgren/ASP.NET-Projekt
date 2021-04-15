@@ -4,6 +4,11 @@
 @{
     ViewData["Title"] = "My Events";
 }
+@if (Model.Events == null || Model.Events.Count == 0)
+            {
+                <p>You havn't joined any events yet</p>
+                <p>Go to <a class="btn btn-outline-dark" asp-area="" asp-page="/Events/Index">Upcoming Events</a> and join an event.</p>
+            }
 
 <div class="accordion" id="accordionExample">
     @foreach (var item in Model.Events)
