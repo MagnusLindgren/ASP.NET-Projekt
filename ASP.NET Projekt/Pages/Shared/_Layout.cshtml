@@ -13,9 +13,6 @@
     <link rel="stylesheet" href="~/css/StyleSheet.css" />
 </head>
 <body>
-    <div class="alert alert-success" role="alert">
-        A simple primary alert—check it out!
-    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
              @if (User.IsInRole("Administrator")) { @("style=background-color:lightgrey!important;")  } else if (User.IsInRole("Organizer")) { @("style=background-color:lightgreen!important;;")  } else if (User.IsInRole("Attendee")) { @("style=background-color:lightblue!important;;") }>
