@@ -42,20 +42,21 @@ namespace ASP.NET_Projekt.Pages.Admin
 
             DetailsChanged = detailsChanged ?? false;
 
+            // Hämta User
             User = await _context.Users
                 .Include(a => a.JoinedEvents)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            // Hämta roll(er)
             Roles = await _userManager.GetRolesAsync(User);
 
-            //var attendee = await _context.Users.Include(a => a.JoinedEvents).FirstOrDefaultAsync();
+            // Hämta Events som User är registrerad till
             UserEvents = User.JoinedEvents;
 
             if (User == null)
             {
                 NotFound();
             }
-            //return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -67,20 +68,25 @@ namespace ASP.NET_Projekt.Pages.Admin
                 return Page();
             }
 
+            // Hämta data för att skriva över
             var newUserDetails = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
 
+            // Skriv över gammal data med ny data
             newUserDetails.UserName = User.UserName;
             newUserDetails.FirstName = User.FirstName;
             newUserDetails.LastName = User.LastName;
             newUserDetails.Email = User.Email;
             newUserDetails.PhoneNumber = User.PhoneNumber;
 
+            // Kolla om parametern ger ett BanUser = true eller false
             if (BanUser ?? false)
             {
+                // Om Usern är utelåst så nollställs LockoutEnd
                 if (newUserDetails.LockoutEnd != null)
                 {
                     newUserDetails.LockoutEnd = null;
                 }
+                // Om Usern inte har något värde i LockoutEnd så läggs värde till
                 else
                 { 
                 newUserDetails.LockoutEnd = DateTime.Now.AddDays(9999);
@@ -88,6 +94,7 @@ namespace ASP.NET_Projekt.Pages.Admin
                 }
             }
 
+            // Försök att spara
             try
             {
                 await _context.SaveChangesAsync();
@@ -104,7 +111,8 @@ namespace ASP.NET_Projekt.Pages.Admin
                 }
             }
 
-            //return Page();
+            // Använder RedirectToPage för att få till rätt resultat.
+            // Skicka med bool när Save eller Ban  trycks för att få en alert samt id på User
             return RedirectToPage("./UserDetails", new { DetailsChanged = true,  id = id });
         }
 

@@ -19,15 +19,15 @@
     background-attachment: fixed;
 }
 
-    #showcase h1 {
-        color: #fff;
-        font-size: 50px;
-        text-shadow: 2px 2px black;
-        line-height: 1.6em;
-        padding-top: 30px;
-    }
+#showcase h1 {
+    color: #fff;
+    font-size: 50px;
+    text-shadow: 2px 2px black;
+    line-height: 1.6em;
+    padding-top: 30px;
+}
 
-    #showcase p {
-        color: #fff;
-        text-shadow: 2px 2px black;
-    }
+#showcase p {
+    color: #fff;
+    text-shadow: 2px 2px black;
+}
