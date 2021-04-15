@@ -28,7 +28,7 @@ namespace ASP.NET_Projekt.Pages.Admin
         }
 
         [BindProperty]
-        public User User { get; set; }
+        public User ThisUser { get; set; }
         public IList<Event> UserEvents { get; set; }
         public IList<string> Roles { get; set; }
         public bool DetailsChanged { get; set; }
@@ -43,15 +43,15 @@ namespace ASP.NET_Projekt.Pages.Admin
             DetailsChanged = detailsChanged ?? false;
 
             // Hämta User
-            User = await _context.Users
+            ThisUser = await _context.Users
                 .Include(a => a.JoinedEvents)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             // Hämta roll(er)
-            Roles = await _userManager.GetRolesAsync(User);
+            Roles = await _userManager.GetRolesAsync(ThisUser);
 
             // Hämta Events som User är registrerad till
-            UserEvents = User.JoinedEvents;
+            UserEvents = ThisUser.JoinedEvents;
 
             if (User == null)
             {
@@ -72,11 +72,11 @@ namespace ASP.NET_Projekt.Pages.Admin
             var newUserDetails = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
 
             // Skriv över gammal data med ny data
-            newUserDetails.UserName = User.UserName;
-            newUserDetails.FirstName = User.FirstName;
-            newUserDetails.LastName = User.LastName;
-            newUserDetails.Email = User.Email;
-            newUserDetails.PhoneNumber = User.PhoneNumber;
+            newUserDetails.UserName = ThisUser.UserName;
+            newUserDetails.FirstName = ThisUser.FirstName;
+            newUserDetails.LastName = ThisUser.LastName;
+            newUserDetails.Email = ThisUser.Email;
+            newUserDetails.PhoneNumber = ThisUser.PhoneNumber;
 
             // Kolla om parametern ger ett BanUser = true eller false
             if (BanUser ?? false)
@@ -101,7 +101,7 @@ namespace ASP.NET_Projekt.Pages.Admin
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(User.Id))
+                if (!UserExists(ThisUser.Id))
                 {
                     return NotFound();
                 }

@@ -95,7 +95,8 @@ namespace ASP.NET_Projekt.Areas.Identity.Pages.Account
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    var userId = await _userManager.FindByNameAsync(Input.UserName);
+                    return RedirectToPage("./Lockout", new { id = userId.Id});
                 }
                 else
                 {

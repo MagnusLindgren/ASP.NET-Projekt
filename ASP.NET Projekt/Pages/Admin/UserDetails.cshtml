@@ -18,7 +18,7 @@
             {
                 <h4>@Html.DisplayFor(modelItem => item)</h4>
             }
-            @if (Model.User.LockoutEnd != null)
+            @if (Model.ThisUser.LockoutEnd != null)
             {
                 <h3 class="text-danger">Banned</h3>
             }
@@ -30,33 +30,33 @@
                 </div>
             }
             <div class="form-group">
-                <label asp-for="User.UserName" class="control-label"></label>
-                <input asp-for="User.UserName" class="form-control" />
-                <span asp-validation-for="User.UserName" class="text-danger"></span>
+                <label asp-for="ThisUser.UserName" class="control-label"></label>
+                <input asp-for="ThisUser.UserName" class="form-control" />
+                <span asp-validation-for="ThisUser.UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.FirstName" class="control-label"></label>
-                <input asp-for="User.FirstName" class="form-control" />
-                <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                <label asp-for="ThisUser.FirstName" class="control-label"></label>
+                <input asp-for="ThisUser.FirstName" class="form-control" />
+                <span asp-validation-for="ThisUser.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.LastName" class="control-label"></label>
-                <input asp-for="User.LastName" class="form-control" />
-                <span asp-validation-for="User.LastName" class="text-danger"></span>
+                <label asp-for="ThisUser.LastName" class="control-label"></label>
+                <input asp-for="ThisUser.LastName" class="form-control" />
+                <span asp-validation-for="ThisUser.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
+                <label asp-for="ThisUser.Email" class="control-label"></label>
+                <input asp-for="ThisUser.Email" class="form-control" />
                 <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="User.PhoneNumber" class="control-label"></label>
-                <input asp-for="User.PhoneNumber" class="form-control" />
-                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+                <label asp-for="ThisUser.PhoneNumber" class="control-label"></label>
+                <input asp-for="ThisUser.PhoneNumber" class="form-control" />
+                <span asp-validation-for="ThisUser.PhoneNumber" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="User.JoinedEvents" class="control-label"></label>
+                <label asp-for="ThisUser.JoinedEvents" class="control-label"></label>
                 @foreach (var item in Model.UserEvents)
                 {
                     <br />
@@ -71,7 +71,7 @@
         
         <div class="form-group mx-1">
             @{string banValue; }
-            @if (@Model.User.LockoutEnd != null)
+            @if (@Model.ThisUser.LockoutEnd != null)
             {
                 banValue = "Unban";
             }
@@ -79,7 +79,7 @@
             {
                 banValue = "Ban!";
             }
-            <input type="submit" value="@banValue" class="btn btn-danger" asp-route-id="@Model.User.Id" asp-route-BanUser="true" />
+            <input type="submit" value="@banValue" class="btn btn-danger" asp-route-id="@Model.ThisUser.Id" asp-route-BanUser="true" />
         </div>
     </div>
         </form>
