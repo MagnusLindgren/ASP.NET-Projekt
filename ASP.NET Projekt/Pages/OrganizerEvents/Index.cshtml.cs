@@ -27,10 +27,10 @@ namespace ASP.NET_Projekt.Pages.OrganizerEvents
 
         public async Task OnGetAsync()
         {
-            var organizerId = _userManager.GetUserId(User);
+            var organizerId = await _userManager.GetUserAsync(User);
 
             Event = await _context.Events
-                .Where(o => o.Organizer.Id == organizerId)
+                .Where(o => o.Organizer.Id == organizerId.Id)
                 .ToListAsync();
         }
     }
