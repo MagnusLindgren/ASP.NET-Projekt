@@ -16,11 +16,14 @@
             <p>Use the the buttons up in the menu to navigate</p>
             <a class="btn btn-outline-dark" asp-area="" asp-page="/Events/Index">Find A New Event</a>
         </div>
-        <div class="text-center">
-            <h3>Are you an Organinzer?</h3>
-            <p>Contact an admin to get Organizers rights on this site</p>
-            <a class="btn btn-outline-dark" asp-area="" asp-page="/Contact">Contact Admin</a>
-        </div>
+        @if (User.IsInRole("Attendee"))
+        { 
+            <div class="text-center">
+                <h3>Do you want to become an Organinzer?</h3>
+                <p>Contact an admin to get Organizers rights on this site</p>
+                <a class="btn btn-outline-dark" asp-area="" asp-page="/Contact">Contact Admin</a>
+            </div>
+        }
     }
     else
     {
