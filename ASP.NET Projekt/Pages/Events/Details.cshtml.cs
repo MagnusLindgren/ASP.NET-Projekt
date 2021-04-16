@@ -83,7 +83,7 @@ namespace ASP.NET_Projekt.Pages.Events
             await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Details", new { id = id });
+            return Page();
         }
     }
 }

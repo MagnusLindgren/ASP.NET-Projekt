@@ -71,7 +71,7 @@ namespace ASP.NET_Projekt.Pages.MyEvents
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }
