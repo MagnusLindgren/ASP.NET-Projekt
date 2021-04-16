@@ -26,9 +26,9 @@ namespace ASP.NET_Projekt.Pages.MyEvents
 
         public async Task OnGetAsync()
         {
-            var userId = _userManager.GetUserId(User);
+            var userId = await _userManager.GetUserAsync(User);
             var attendee = await _context.Users
-                .Where(a => a.Id == userId)
+                .Where(a => a.Id == userId.Id)
                 .Include(a => a.JoinedEvents)
                 .FirstOrDefaultAsync();
 
