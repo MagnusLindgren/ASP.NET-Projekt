@@ -37,6 +37,9 @@
                         <h4>Spots Available</h4>
                         <p>@Html.DisplayFor(modelItem => item.SpotsAvailable)</p>
                     </div>
+                    <div class="border-bottom">
+                        <p>Event organized by @Html.DisplayFor(modelItem => item.Organizer.UserName)</p>
+                    </div>
 
                     <div class="row d-flex justify-content-between">
                         <div class="">
@@ -44,11 +47,10 @@
                         </div>
                         @if (User.IsInRole("Administrator"))
                         {
-                            <div class="float-right">
-                                <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                            </div>
-                        }
+                <div class="float-right">
+                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </div>}
                     </div>
                 </div>
             </div>

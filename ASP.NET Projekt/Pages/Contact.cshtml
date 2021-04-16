@@ -1,0 +1,84 @@
+﻿@page
+@model ASP.NET_Projekt.Pages.ContactModel
+@{
+    ViewData["Title"] = "Contact Us";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@if (Request.Method == "POST")
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Email Successfully Sent!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="d-flex align-items-center flex-column">
+        <h2>You've successfully sent an email!</h2>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+}
+
+<form class="form form-horizontal" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Contact.OrganizationName" class="control-label">Username / Organization name:</label>
+                <div class="col-md-9">
+                    <input asp-for="Contact.OrganizationName" class="form-control" />
+                    <span asp-validation-for="Contact.OrganizationName"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Contact.FirstName" class="col-md-3 right">First Name:</label>
+                <div class="col-md-9">
+                    <input asp-for="Contact.FirstName" class="form-control" />
+                    <span asp-validation-for="Contact.FirstName"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Contact.LastName" class="col-md-3 right">Last name:</label>
+                <div class="col-md-9">
+                    <input asp-for="Contact.LastName" class="form-control" />
+                    <span asp-validation-for="Contact.LastName"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Contact.Email" class="col-md-3 right">Email:</label>
+                <div class="col-md-9">
+                    <input asp-for="Contact.Email" class="form-control" />
+                    <span asp-validation-for="Contact.Email"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Contact.Message" class="col-md-3 right">Your Message:</label>
+                <div class="col-md-9">
+                    <textarea asp-for="Contact.Message" rows="6" class="form-control"></textarea>
+                    <span asp-validation-for="Contact.Message"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit">Send</button>
+        </div>
+    </div>
+</form>
