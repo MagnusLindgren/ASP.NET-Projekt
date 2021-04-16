@@ -62,7 +62,7 @@ namespace ASP.NET_Projekt.Pages.OrganizerEvents
                 }
                 else
                 {
-                    throw;
+                    return RedirectToPage("/Error");
                 }
             }
 
