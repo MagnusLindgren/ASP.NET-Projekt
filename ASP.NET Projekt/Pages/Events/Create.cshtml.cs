@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ASP.NET_Projekt.Pages.Events
 {
-    [Authorize(Roles = "Admin, Organizer")]
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;

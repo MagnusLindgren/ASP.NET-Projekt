@@ -52,6 +52,9 @@ namespace ASP.NET_Projekt
             {
                 o.Conventions.AllowAnonymousToPage("/Index");
                 o.Conventions.AllowAnonymousToPage("/Events/Index");
+
+                o.Conventions.AuthorizePage("/Events/Create", "RequireOrganizerRole");
+
                 o.Conventions.AuthorizeFolder("/");
                 o.Conventions.AuthorizeFolder("/OrganizerEvents", "RequireOrganizerRole");
                 o.Conventions.AuthorizeFolder("/Admin", "RequireAdminRole");
