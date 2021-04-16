@@ -56,6 +56,7 @@ namespace ASP.NET_Projekt.Pages
                 Page();
             }
 
+            /*
             var mailbody = $@"Hello Event Organizer Admin,
 
                             This is a new Organizer request:
@@ -70,6 +71,7 @@ namespace ASP.NET_Projekt.Pages
             SendMail(mailbody);
 
             RedirectToPage("/Index");
+            */
         }
 
         private void SendMail(string mailbody)
