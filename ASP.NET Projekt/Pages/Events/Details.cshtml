@@ -51,8 +51,11 @@
             @Html.DisplayFor(model => model.Event.SpotsAvailable)
         </dd>
     </dl>
-
-    @if (!Model.AttendeeIsAttending)
+    @if (Model.Event.SpotsAvailable < 1)
+    {
+        <p>No spots available</p>
+    }
+    else if (!Model.AttendeeIsAttending)
     {
         <form method="post">
             <button class="btn btn-primary" type="submit">Join this event</button>

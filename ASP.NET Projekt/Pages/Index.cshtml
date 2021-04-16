@@ -16,21 +16,26 @@
             <p>Use the the buttons up in the menu to navigate</p>
             <a class="btn btn-outline-dark" asp-area="" asp-page="/Events/Index">Find A New Event</a>
         </div>
-        <div class="text-center">
-            <h3>Are you an Organinzer?</h3>
-            <p>Contact an admin to get Organizers rights on this site</p>
-            <a class="btn btn-outline-dark" asp-area="" asp-page="/Contact">Contact Admin</a>
-        </div>
+        @if (User.IsInRole("Attendee"))
+        { 
+            <div class="text-center">
+                <h3>Do you want to become an Organinzer?</h3>
+                <p>Contact an admin to get Organizers rights on this site</p>
+                <a class="btn btn-outline-dark" asp-area="" asp-page="/Contact">Contact Admin</a>
+            </div>
+        }
     }
     else
     {
-        <h1 class="display-4">Welcome</h1>
-        <p>This is a site wher you can sign up for events.</p>
-        <div class=" container-fluid">
-            <div class=" row">
-                <div class="flex-grow-1 align-self-center">
-                    <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                    <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <p>This is a site where you can sign up for events.</p>
+            <div class=" container-fluid">
+                <div class=" row">
+                    <div class="flex-grow-1 align-self-center">
+                        <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </div>
                 </div>
             </div>
         </div>

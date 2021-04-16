@@ -89,7 +89,7 @@ namespace ASP.NET_Projekt.Data
                     Place="Miami",
                     Address="395 E Flagler St, Miami, FL 33132",
                     Date=DateTime.Now.AddDays(34),
-                    SpotsAvailable=234,
+                    SpotsAvailable=1,
                     Organizer=organizer
                 },
                 new Event()
@@ -100,7 +100,7 @@ namespace ASP.NET_Projekt.Data
                     Place="Netherlands",
                     Address="Spijkweg 30, 8256 RJ Biddinghuizen",
                     Date=DateTime.Now.AddDays(34),
-                    SpotsAvailable=234,
+                    SpotsAvailable=0,
                     Organizer=organizer
                 }
             };
