@@ -45,12 +45,21 @@ namespace ASP.NET_Projekt.Pages.Events
 
             var user = await _userManager.GetUserAsync(this.User);
             Event.Organizer = user;
-
-            await _context.Events.AddAsync(Event);
+            try
+            {
+                await _context.Events.AddAsync(Event);
             
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                
+                return Page();
+            }
+            catch (Exception)
+            {
 
-            return Page();
+                return RedirectToPage("/Error");
+            }
+
+
         }
     }
 }

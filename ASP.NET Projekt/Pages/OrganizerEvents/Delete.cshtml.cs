@@ -49,8 +49,17 @@ namespace ASP.NET_Projekt.Pages.OrganizerEvents
 
             if (Event != null)
             {
-                _context.Events.Remove(Event);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Events.Remove(Event);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+
+                    return RedirectToPage("/Error");
+                }
+
             }
 
             return Page();

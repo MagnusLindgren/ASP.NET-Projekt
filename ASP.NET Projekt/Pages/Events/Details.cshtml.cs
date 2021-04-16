@@ -78,9 +78,16 @@ namespace ASP.NET_Projekt.Pages.Events
 
             if (!Event.Attendees.Contains(attendee))
             {
-            Event.SpotsAvailable--;
-            Event.Attendees.Add(attendee);
-            await _context.SaveChangesAsync();
+                try
+                {
+                    Event.SpotsAvailable--;
+                    Event.Attendees.Add(attendee);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    return RedirectToPage("/Error");
+                }
             }
 
             return Page();

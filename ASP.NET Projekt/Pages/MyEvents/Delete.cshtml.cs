@@ -67,8 +67,16 @@ namespace ASP.NET_Projekt.Pages.MyEvents
 
             if (Event != null)
             {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+
+                    return RedirectToPage("/Error");
+                }
                 
-                await _context.SaveChangesAsync();
             }
 
             return Page();

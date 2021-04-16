@@ -64,7 +64,7 @@ namespace ASP.NET_Projekt.Pages.Events
                 }
                 else
                 {
-                    throw;
+                    return RedirectToPage("/Error");
                 }
             }
 
